@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinematic Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0d0d0d;color:white;overflow-x:hidden;scroll-behavior:smooth}
+
+/* RED + WHITE THEME */
+:root{
+  --red:#ff2e2e;
+  --darkred:#b30000;
+  --white:#ffffff;
+}
+/* Top Progress Bar */
+#progressBar{
+  position:fixed;
+  top:0;
+  left:0;
+  height:4px;
+  width:0%;
+  background:linear-gradient(90deg,var(--red),white,var(--red));
+  z-index:10000;
+  transition:width 0.25s ease;
+}
+/* Greeting */
+#greeting{
+  position:fixed;
+  top:40%;
+  width:100%;
+  text-align:center;
+  font-size:32px;
+  font-weight:600;
+  opacity:0;
+  animation:fadeGreeting 2s forwards;
+  z-index:9999;
+}
+
+@keyframes fadeGreeting{
+  0%{opacity:0;transform:translateY(20px)}
+  20%{opacity:1;transform:translateY(0)}
+  80%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
+
+/* INTRO BOX */
+.intro-box{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.3);
+  padding:60px 100px;                 /* more padding */
+  border-radius:20px;
+  background:transparent;             /* removed background */
+  text-align:center;
+  z-index:1000;
+  animation:zoomIn 2s forwards;       /* slower zoom */
+}
+
+@keyframes zoomIn{
+  to{transform:translate(-50%,-50%) scale(1);}
+}
+
+
+@keyframes rotate{
+  to{transform:rotate(360deg);}
+}
+
+.intro-name{
+  font-size:40px;
+  font-weight:800;
+}
+
+.intro-role{
+  margin-top:10px;
+  font-size:20px;
+  border-bottom:2px solid var(--red);
+  display:inline-block;
+  padding-bottom:5px;
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  padding:20px 60px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  opacity:0;
+  transition:1s;
+  background:transparent;   /* ✅ removed dark background */
+  backdrop-filter:none;     /* ✅ remove blur */
+}
+header.active{
+  opacity:1;
+}
+
+nav a{
+  color:white;
+  margin-left:30px;
+  text-decoration:none;
+  position:relative;
+}
+
+nav a::after{
+  content:'';
+  position:absolute;
+  left:0;
+  bottom:-5px;
+  width:0%;
+  height:2px;
+  background:var(--red);
+  transition:.4s;
+}
+
+nav a:hover::after,
+nav a.active::after{
+  width:100%;
+}
+
+/* Sections */
+section{
+  min-height:100vh;
+  padding:120px 8%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  opacity:0;
+  transform:translateY(80px);
+  transition:1s;
+}
+
+section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+h2{
+  font-size:32px;
+  margin-bottom:20px;
+  color:var(--red);
+}
+
+ul li{
+  margin:12px 0;
+  opacity:0;
+  transform:translateX(-40px);
+  transition:.6s;
+}
+
+ul li.show{
+  opacity:1;
+  transform:translateX(0);
+}
+
+
+/* ================= MOBILE VIEW ================= */
+@media (max-width: 768px){
+
+  section{
+    scroll-margin-top: 100px;
+  }
+
+  /* Reduce global padding */
+  section{
+    padding:175px 6%;
+  }
+
+  /* Greeting smaller */
+  #greeting{
+    font-size:22px;
+    padding:0 20px;
+  }
+
+  /* Intro Box */
+  .intro-box{
+    padding:30px 25px;
+    width:90%;
+  }
+
+  .intro-name{
+    font-size:26px;
+    word-break:break-word;
+  }
+
+  .intro-role{
+    font-size:16px;
+  }
+
+  /* Header */
+  header{
+    padding:15px 20px;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  nav{
+    margin-top:10px;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+  }
+
+  nav a{
+    margin-left:0;
+    font-size:14px;
+  }
+
+  /* Section Headings */
+  h2{
+    font-size:22px;
+  }
+
+  /* Paragraph */
+  section p{
+    font-size:14px;
+    line-height:1.6;
+  }
+
+  /* List items */
+  ul li{
+    font-size:14px;
+  }
+
+  /* Intro move to header scaling adjustment */
+  @media (max-width: 768px){
+    #intro{
+      top:60px !important;
+      left:20px !important;
+      transform:scale(0.8) !important;
+    }
+  }
+
+}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+<div id="greeting"></div>
+
+<div class="intro-box" id="intro">
+  <div class="intro-name" id="typeName"></div>
+  <div class="intro-role">Software Engineer</div>
+</div>
+
+<header id="header">
+  <div id="logo"></div>
+  <nav>
+    <a href="#summary">Summary</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+  </nav>
+</header>
+
+<section id="summary">
+  <h2 class="typeHeading" data-text="Professional Summary"></h2>
+  <p>Overall 4+ years of professional experience specializing in Kentico CMS (versions 10, 11, 12 Portal, MVC, and Xperience) 
+with a strong focus on designing, developing, and customizing solutions to meet business requirements. 
+Proficient in modern content management systems, including Umbraco and Sitefinity, with expertise in C#, LINQ, 
+and the .NET Framework (3.5 & 4.0). Skilled in building scalable and maintainable applications using ADO.NET and 
+SQL Server 2019. 
+Hands-on experience with Web Services, JavaScript, and jQuery for creating dynamic, interactive user interfaces. 
+Proficient in front-end build tools such as Gulp and pre-processing frameworks like LESS and SASS for efficient styling 
+and design workflows. 
+Adept at troubleshooting, collaborating with cross-functional teams, and integrating APIs for seamless user 
+experiences. Strong focus on delivering high-quality, end-to-end solutions aligned with business goals while 
+adhering to agile methodologies and best practices..</p>
+</section>
+
+<section id="skills">
+  <h2 class="typeHeading" data-text="Technical Skills"></h2>
+  <ul>
+    
+<li>CMS Platforms: Kentico 10,11, 12, 13 (Portal, MVC, & Xperience), Umbraco, Sitefinity. </li> 
+<li>Programming & Frameworks: C#, LINQ, .NET Framework 3.5, 4.0, 4.7, .NET Core, .NET 6 & ADO.NET. </li>
+<li>Database Management: SQL Server 2019, advanced query optimization, stored procedures. </li>
+<li>Web Technologies: Web Services, JavaScript, jQuery. </li>
+<li>Front-End Development: Gulp, LESS, SASS, CSS for styling and task automation. </li>
+<li>Version Control: Git, Azure DevOps, Bitbucket for code repositories and CI/CD pipelines. </li>
+<li>Development Tools: Visual Studio 2019, 2022. </li>
+<li>Project Tools: Proficient in agile development processes, troubleshooting, and API integrations</li>
+  </ul>
+</section>
+
+<section id="experience">
+  <h2 class="typeHeading" data-text="Work Experience"></h2>
+  <ul>
+    <li>Korcomptenz Inc. – Software Engineer</li>
+    <li>Ray Business Technology – Software Engineer</li>
+  </ul>
+</section>
+
+<script>
+
+
+/* ---------- Dynamic Greeting ---------- */
+const greet = document.getElementById("greeting");
+const hour = new Date().getHours();
+let text = "";
+
+if (hour < 12) text = "Good Morning Amarnath ☀️";
+else if (hour < 18) text = "Good Afternoon Amarnath 🌤️";
+else text = "Good Evening Amarnath 🌙";
+
+greet.innerText = text;
+
+
+/* ---------- Typing Function (Promise Based) ---------- */
+function typeText(el, text, speed = 70) {
+  return new Promise(resolve => {
+    el.innerHTML = "";
+    let i = 0;
+
+    function typing() {
+      if (i < text.length) {
+        el.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      } else {
+        resolve();
+      }
+    }
+
+    typing();
+  });
+}
+
+
+/* ---------- Type Intro Name ---------- */
+typeText(document.getElementById("typeName"), "Amarnath Behera", 100);
+
+
+/* ---------- Move Intro To Header ---------- */
+setTimeout(() => {
+  const intro = document.getElementById("intro");
+
+  intro.style.transition = "1.8s ease";
+  intro.style.top = "70px";
+  intro.style.transform = "scale(0.6)";
+
+  document.getElementById("header").classList.add("active");
+
+}, 5000);
+
+/* ---------- Loading Animation ---------- */
+function showLoading(section) {
+  return new Promise(resolve => {
+
+    const loader = document.createElement("div");
+    loader.innerHTML = "...";
+    loader.style.marginTop = "30px";
+    loader.style.fontSize = "22px";
+    loader.style.color = "var(--red)";
+    loader.style.opacity = "0.7";
+
+    section.appendChild(loader);
+
+    setTimeout(() => {
+      loader.remove();
+      resolve();
+    }, 2000);
+
+  });
+}
+
+
+/* ---------- Section Reveal Controller ---------- */
+const sections = document.querySelectorAll("section");
+let autoMode = true;
+async function revealSections() {
+
+  for (let section of sections) {
+
+    if (!autoMode) break;   // 🛑 stop if user clicks
+
+    section.classList.add("show");
+    section.scrollIntoView({ behavior: "smooth" });
+
+    const heading = section.querySelector(".typeHeading");
+
+    await typeText(heading, heading.dataset.text, 80);
+
+    const items = section.querySelectorAll("li");
+
+    for (let i = 0; i < items.length; i++) {
+      if (!autoMode) break;
+
+      await new Promise(res => {
+        setTimeout(() => {
+          items[i].classList.add("show");
+          res();
+        }, 600);
+      });
+    }
+
+    if (!autoMode) break;
+
+    await new Promise(res => setTimeout(res, 4500));
+    await showLoading(section);
+  }
+}
+
+
+/* Start After Intro Animation Completes */
+setTimeout(revealSections, 7000);
+
+/* Manual Navigation */
+const navLinks = document.querySelectorAll("nav a");
+
+navLinks.forEach(link => {
+
+  link.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    autoMode = false;  // 🛑 stop cinematic mode
+
+    const targetId = this.getAttribute("href");
+    const targetSection = document.querySelector(targetId);
+
+    targetSection.scrollIntoView({ behavior: "smooth" });
+
+    setActiveMenu(this);
+  });
+
+});
+
+function setActiveMenu(activeLink) {
+  navLinks.forEach(link => link.classList.remove("active"));
+  activeLink.classList.add("active");
+}
+
+window.addEventListener("scroll", () => {
+
+  if (autoMode) return;
+
+  sections.forEach(section => {
+
+    const top = section.offsetTop - 200;
+    const bottom = top + section.offsetHeight;
+    const scroll = window.scrollY;
+
+    if (scroll >= top && scroll < bottom) {
+      const id = section.getAttribute("id");
+
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + id) {
+          link.classList.add("active");
+        }
+      });
+    }
+
+  });
+
+});
+
+/* ---------- Scroll Progress Bar ---------- */
+const progressBar = document.getElementById("progressBar");
+
+function updateProgressBar() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  progressBar.style.width = scrollPercent + "%";
+}
+
+window.addEventListener("scroll", updateProgressBar);
+</script>
+
+</body>
+</html>

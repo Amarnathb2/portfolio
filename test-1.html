@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amarnath Behera | Cinematic Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#0f0c29;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* Animated Gradient Blobs */
+body::before{
+  content:'';
+  position:fixed;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle,#ff4ecd,#00f5a0);
+  filter:blur(150px);
+  top:-200px;
+  left:-200px;
+  z-index:-1;
+}
+
+body::after{
+  content:'';
+  position:fixed;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle,#00d9f5,#9d4edd);
+  filter:blur(150px);
+  bottom:-200px;
+  right:-200px;
+  z-index:-1;
+}
+
+section{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:40px 8%;
+  transition:1s ease;
+}
+
+.content{
+  max-width:900px;
+  text-align:center;
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.07);
+  padding:40px;
+  border-radius:20px;
+  transform:translateX(0);
+  opacity:0;
+  transition:1s ease;
+}
+
+/* Left & Right Animations */
+.from-left{
+  transform:translateX(-100px);
+}
+
+.from-right{
+  transform:translateX(100px);
+}
+
+.show{
+  transform:translateX(0);
+  opacity:1;
+}
+
+/* Typography */
+h1{
+  font-size:3rem;
+  font-weight:800;
+}
+
+h2{
+  margin-bottom:20px;
+  font-size:2rem;
+  background:linear-gradient(45deg,#ff4ecd,#00f5a0);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+p{
+  line-height:1.6;
+  font-weight:300;
+}
+
+.btn{
+  margin-top:25px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#ff4ecd,#00f5a0);
+  font-weight:600;
+  cursor:pointer;
+  transition:.4s;
+}
+
+.btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 25px #ff4ecd;
+}
+
+footer{
+  position:fixed;
+  bottom:10px;
+  width:100%;
+  text-align:center;
+  font-size:14px;
+  opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="content show">
+    <h1>Hi, I'm Amarnath Behera</h1>
+    <h2 id="typing"></h2>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="content from-left">
+    <h2>About Me</h2>
+    <p>
+      Full Stack .NET Developer with expertise in Kentico CMS, .NET Core,
+      enterprise migrations, SSO integrations, API automation, and Azure cloud modernization.
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="content from-right">
+    <h2>Technical Skills</h2>
+    <p>.NET | C# | Kentico | SQL Server | Azure | DevOps | API Integration</p>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="content from-left">
+    <h2>Key Projects</h2>
+    <p>
+      Hyatt Hawaii Migration • AirTahiti Nui Booking Platform • Viking Cruises SSO Integration
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="content from-right">
+    <h2>Contact</h2>
+    <p>Email: amarnathbehera2@gmail.com</p>
+    <p>GitHub: github.com/Amarnathb2</p>
+    <p>LinkedIn: linkedin.com/in/amarnath-behera</p>
+  </div>
+</section>
+
+<footer>
+© 2026 Amarnath Behera
+</footer>
+
+<script>
+
+/* Typing Effect */
+const text="Full Stack .NET Developer | Kentico Expert | Cloud Engineer";
+let i=0;
+
+function typeEffect(){
+  if(i<text.length){
+    document.getElementById("typing").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typeEffect,60);
+  }else{
+    setTimeout(startAutoScroll,800);
+  }
+}
+typeEffect();
+
+/* Auto Scroll Story Mode */
+const sections=document.querySelectorAll("section");
+let current=0;
+
+function startAutoScroll(){
+  autoScroll();
+}
+
+function autoScroll(){
+  current++;
+  if(current<sections.length){
+    sections[current].scrollIntoView({behavior:"smooth"});
+    const content=sections[current].querySelector(".content");
+    setTimeout(()=>{content.classList.add("show");},500);
+    setTimeout(autoScroll,2500);
+  }
+}
+
+</script>
+
+</body>
+</html>
